@@ -14,8 +14,11 @@
             <div class="col-12">
                 <label for="inpSwear">Add new swear</label>
                 <input id="inpSwear" v-model="message">
-                <button @click="addSwear">Add swear</button>
+                <button class="btn" @click="addSwear">Add swear</button>
                 <p class="bg-warning">{{ error }}</p>
+            </div>
+            <div class="col-12">
+                <button class="btn btn-danger" @click="sendMoney">Send money</button>
             </div>
         </div>
     </div>
@@ -23,6 +26,7 @@
 
 <script>
 import Vue from 'vue';
+import sendAmount from '@/utils/mobilePay.js';
 
 export default {
     data() {
@@ -57,6 +61,9 @@ export default {
                 this.error = 'Swear already exists!'
             }
             this.message = '';
+        },
+        sendMoney() {
+            sendAmount(15.51);
         }
     }
 }
