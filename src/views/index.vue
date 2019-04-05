@@ -18,7 +18,7 @@
                 <p class="bg-warning">{{ error }}</p>
             </div>
             <div class="col-12">
-                <button class="btn btn-danger" @click="sendMoney">Send money</button>
+                <button class="btn btn-info" :class="{ 'btn-into': !moneyHasBeenSend, 'btn-warning': moneyHasBeenSend }" @click="sendMoney">{{ btnText }}</button>
             </div>
         </div>
     </div>
@@ -31,6 +31,8 @@ import sendAmount from '@/utils/mobilePay.js';
 export default {
     data() {
         return {
+            moneyHasBeenSend: false,
+            btnText: 'Send money',
             message: '',
             error: '',
             swears: [],
@@ -63,7 +65,11 @@ export default {
             this.message = '';
         },
         sendMoney() {
-            sendAmount(15.51);
+            if(!this.moneyHasBeenSend) {
+                sendAmount(15.51);
+                this.moneyHasBeenSend = true;
+                this.btnText = 'Money has been sent';
+            }
         }
     }
 }
