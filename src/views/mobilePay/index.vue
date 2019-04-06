@@ -3,11 +3,6 @@
         <h1 class="mx-auto">Mobile pay</h1>
         <div class="container">
             <div class="row">
-                <h2 class="mx-auto">SwearJar balance</h2>
-                <div class="col-12">
-                    SwearJar has <span class="font-weight-bold">{{ jarBalance }}</span> DKK in the jar.
-                </div>
-
                 <h2 class="mx-auto">Users:</h2>
                 <div class="col-12" v-for="user in users">
                     <span class="font-weight-bold">{{ user.name }}</span> has <span class="font-weight-bold">{{ user.balance }}</span> DKK left in their account.
@@ -23,9 +18,13 @@
                     </div>
                 </div>
 
-                <h2 class="mx-auto mt-4 d">Transactions</h2>
-                <div class="col-12" v-for="transaction in transactions">
-                    <span class="font-weight-bold">{{ transaction.from }}</span> payed <span class="font-weight-bold">{{ transaction.amount }}</span> DKK for saying <span class="font-weight-bold">{{ transaction.word }}</span>.
+                <h2 class="mx-auto col-12 mt-4 d">Transactions</h2>
+                <div class="col-auto mx-auto hidden-container">
+                    <div class="px-5 bg-white transaction-container">
+                        <div v-for="transaction in transactions">
+                            <span class="font-weight-bold">{{ transaction.from }}</span> payed <span class="font-weight-bold">{{ transaction.amount }}</span> DKK for saying <span class="font-weight-bold">{{ transaction.word }}</span>.
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -110,5 +109,14 @@ export default {
     -moz-border-radius: 1rem;
     border-radius: 1rem;
     width: 25rem;
+}
+
+.transaction-container {
+    max-height: 15rem;
+    overflow-y: scroll;
+}
+
+.hidden-container {
+    overflow-y: hidden;
 }
 </style>
