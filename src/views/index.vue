@@ -1,24 +1,22 @@
 <template>
     <div class="container">
         <div class="row">
-            <div class="col-12">
-                <h1 class="mx-auto">AUHack19! SwearJar</h1>
-            </div>
-            <div class="col-12 d-flex justify-content-center">
+            <div class="col-12 d-flex justify-content-center swear-list">
                 <ul class="list-unstyled text-left" id="test">
                     <li v-for="(swear, index) in swears">
-                        {{ index }} - {{ swear }}
+                        {{ index }} - <span>{{ swear.word }}</span> said <span>{{ swear.count }}</span> times.
                     </li>
                 </ul>
             </div>
-            <div class="col-12">
-                <label for="inpSwear">Add new swear</label>
-                <input id="inpSwear" v-model="message">
-                <button class="btn" @click="addSwear">Add swear</button>
+            <div class="col-12 form-group">
+                <div class="d-flex flex-column flex-md-row justify-content-center">
+                    <input class="form-control swear-input" id="inpSwear" type="text" v-model="message" placeholder="Add a swear word herer">
+                    <button class="btn btn-primary" @click="addSwear">Add swear</button>
+                </div>
                 <p class="bg-warning">{{ error }}</p>
             </div>
             <div class="col-12">
-                <button class="btn btn-info" :class="{ 'btn-into': !moneyHasBeenSend, 'btn-warning': moneyHasBeenSend }" @click="sendMoney">{{ btnText }}</button>
+                <button class="btn" :class="{ 'btn-success': !moneyHasBeenSend, 'btn-warning': moneyHasBeenSend }" @click="sendMoney">{{ btnText }}</button>
             </div>
         </div>
     </div>
@@ -32,7 +30,7 @@ export default {
     data() {
         return {
             moneyHasBeenSend: false,
-            btnText: 'Send money',
+            btnText: 'Send money (mobilepay test)',
             message: '',
             error: '',
             swears: [],
@@ -53,7 +51,7 @@ export default {
     methods: {
         addSwear(event) {
             if(this.message && !this.swears.includes(this.message)) {
-                this.ref.push(this.message);
+                this.ref.push({ word: this.message, count: 0 });
                 this.error = '';
             }
             else if(this.message === '') {
@@ -74,3 +72,28 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+.swear-list {
+    overflow-y: hidden;
+}
+
+.swear-list ul {
+    max-height: 250px;
+    overflow-y: scroll;
+}
+
+li span {
+    font-weight: bold;
+}
+
+.swear-input {
+    max-width: 25rem;
+}
+
+@media(max-width: 770px) {
+    .swear-input {
+        max-width: unset;
+    }
+}
+</style>
