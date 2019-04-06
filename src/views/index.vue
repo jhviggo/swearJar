@@ -17,6 +17,7 @@
             </div>
             <div class="col-12">
                 <button class="btn" :class="{ 'btn-success': !moneyHasBeenSend, 'btn-warning': moneyHasBeenSend }" @click="sendMoney">{{ btnText }}</button>
+                <button class="btn btn-primary" @click="$router.push('/users')">See MobilePay overview</button>
             </div>
         </div>
     </div>
@@ -50,12 +51,16 @@ export default {
     },
     methods: {
         addSwear(event) {
-            if(this.message && !this.swears.includes(this.message)) {
+            for(let i = 0; i < this.swears.length; i++) {
+                if(this.swears[i].word.toLocaleLowerCase() == this.message.toLowerCase()) {
+                    this.error = 'Swear already exists!'
+                    return;
+                }
+            }
+
+            if(this.message) {
                 this.ref.push({ word: this.message, count: 0 });
                 this.error = '';
-            }
-            else if(this.message === '') {
-                this.error = 'Please type something.';
             }
             else {
                 this.error = 'Swear already exists!'
