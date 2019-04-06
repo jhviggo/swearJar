@@ -1,10 +1,10 @@
 <template>
-    <div class="container">
+    <div class="container pt-3">
         <div class="row">
             <div class="col-12 d-flex justify-content-center swear-list">
                 <ul class="list-unstyled text-left" id="test">
                     <li v-for="(swear, index) in swears">
-                        {{ index }} - <span>{{ swear.word }}</span> said <span>{{ swear.count }}</span> times and costs <span>{{ swear.cost }}</span> each .
+                        {{ index }} - <span>{{ swear.word }}</span> said <span>{{ swear.count }}</span> times and costs <span>{{ swear.cost }}</span>DKK each .
                     </li>
                 </ul>
             </div>
