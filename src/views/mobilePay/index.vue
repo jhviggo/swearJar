@@ -5,12 +5,12 @@
             <div class="row">
                 <h2 class="mx-auto">SwearJar balance</h2>
                 <div class="col-12">
-                    SwearJar has <span class="font-weight-bold">{{ jarBalance }}</span>DKK in the jar.
+                    SwearJar has <span class="font-weight-bold">{{ jarBalance }}</span> DKK in the jar.
                 </div>
 
                 <h2 class="mx-auto">Users:</h2>
                 <div class="col-12" v-for="user in users">
-                    <span class="font-weight-bold">{{ user.name }}</span> has <span class="font-weight-bold">{{ user.balance }}</span> DKK.
+                    <span class="font-weight-bold">{{ user.name }}</span> has <span class="font-weight-bold">{{ user.balance }}</span> DKK left in their account.
                 </div>
                 <div class="col-12 pt-3">
                     <button v-if="!userCreationOpen" class="btn btn-primary" @click="openUserCreation()">Add new user</button>
@@ -25,7 +25,7 @@
 
                 <h2 class="mx-auto mt-4 d">Transactions</h2>
                 <div class="col-12" v-for="transaction in transactions">
-                    <span class="font-weight-bold">{{ transaction.from }}</span> payed <span class="font-weight-bold">{{ transaction.amount }}</span>DKK for saying <span class="font-weight-bold">{{ transaction.word }}</span>.
+                    <span class="font-weight-bold">{{ transaction.from }}</span> payed <span class="font-weight-bold">{{ transaction.amount }}</span> DKK for saying <span class="font-weight-bold">{{ transaction.word }}</span>.
                 </div>
             </div>
         </div>
