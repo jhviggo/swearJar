@@ -12,6 +12,14 @@
                 <div class="col-12" v-for="user in users">
                     <span class="font-weight-bold">{{ user.name }}</span> has <span class="font-weight-bold">{{ user.balance }}</span> DKK.
                 </div>
+                <div class="col-12">
+                    <button v-if="!userCreationOpen" class="btn btn-primary" @click="openUserCreation()">Add new user</button>
+                    <div v-else class="form-group">
+                        <input id="userName" v-model="userName" class="form-control mx-auto input-field" placeholder="User's name">
+                        <input id="userBalance" v-model="userBalance" class="form-control mx-auto input-field" placeholder="User's balance">
+                        <button class="btn btn-primary" @click="addNewUser()">Add user</button>
+                    </div>
+                </div>
 
                 <h2 class="mx-auto mt-4">Transactions</h2>
                 <div class="col-12" v-for="transaction in transactions">
@@ -34,7 +42,10 @@ export default {
             transactionsRef: Vue.prototype.$db.ref('transactions'),
             users: [],
             transactions: [],
-            jarBalance: 0
+            jarBalance: 0,
+            userCreationOpen: false,
+            userName: '',
+            userBalance: ''
         }
     },
     created() {
@@ -62,6 +73,28 @@ export default {
         }, function (errorObject) {
             console.log("The read failed: " + errorObject.code);
         });
+    },
+    methods: {
+        openUserCreation() {
+            this.userCreationOpen = true;
+        },
+        addNewUser() {
+            if (!this.userName || !this.userBalance || !/\d+\.\d{2}/.test(this.userBalance)) {
+                return;
+            }
+
+            this.usersRef.push({
+                name: this.userName,
+                balance: Number(this.userBalance)
+            });
+            this.userCreationOpen = false;
+        }
     }
 }
 </script>
+
+<style>
+.input-field {
+    max-width: 20rem;
+}
+</style>
