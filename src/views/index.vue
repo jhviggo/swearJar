@@ -10,7 +10,8 @@
             </div>
             <div class="col-12 form-group">
                 <div class="d-flex flex-column flex-md-row justify-content-center">
-                    <input class="form-control swear-input" id="inpSwear" type="text" v-model="message" placeholder="Add a swear word herer">
+                    <input class="form-control swear-input" id="inpSwear" type="text" v-model="message" placeholder="Add a swear word here">
+                    <input class="form-control swear-input cost" id="inpSwearCost" type="text" v-model="cost" placeholder="Cost">
                     <button class="btn btn-primary" @click="addSwear">Add swear</button>
                 </div>
                 <p class="bg-warning">{{ error }}</p>
@@ -33,6 +34,7 @@ export default {
             moneyHasBeenSend: false,
             btnText: 'Send money (mobilepay test)',
             message: '',
+            cost: 0,
             error: '',
             swears: [],
             counter: 0,
@@ -53,13 +55,13 @@ export default {
         addSwear(event) {
             for(let i = 0; i < this.swears.length; i++) {
                 if(this.swears[i].word.toLocaleLowerCase() == this.message.toLowerCase()) {
-                    this.error = 'Swear already exists!'
+                    this.error = 'Swear already exists!';
                     return;
                 }
             }
 
             if(this.message) {
-                this.ref.push({ word: this.message, count: 0 });
+                this.ref.push({ word: this.message, count: 0, cost: this.cost });
                 this.error = '';
             }
             else {
@@ -94,6 +96,10 @@ li span {
 
 .swear-input {
     max-width: 25rem;
+}
+
+.cost {
+    max-width: 10rem;
 }
 
 @media(max-width: 770px) {
