@@ -4,7 +4,7 @@
             <div class="col-12 d-flex justify-content-center swear-list">
                 <ul class="list-unstyled text-left" id="test">
                     <li v-for="(swear, index) in swears">
-                        {{ index }} - <span>{{ swear.word }}</span> said <span>{{ swear.count }}</span> times and costs <span>{{ swear.cost }}</span>DKK each .
+                        {{ index+1 }} - <span>{{ swear.word }}</span> said <span>{{ swear.count }}</span> times and costs <span>{{ swear.cost }}</span>DKK each .
                     </li>
                 </ul>
             </div>
@@ -47,6 +47,7 @@ export default {
         this.ref.on("value", function(snapshot) {
             _self.swears = [];
             Object.keys(snapshot.val()).forEach(item => _self.swears.push(snapshot.val()[item]));
+            _self.swears.sort((a, b) => b.count - a.count);
         }, function (errorObject) {
             console.log("The read failed: " + errorObject.code);
         });
