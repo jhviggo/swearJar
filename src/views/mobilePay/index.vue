@@ -12,16 +12,18 @@
                 <div class="col-12" v-for="user in users">
                     <span class="font-weight-bold">{{ user.name }}</span> has <span class="font-weight-bold">{{ user.balance }}</span> DKK.
                 </div>
-                <div class="col-12">
+                <div class="col-12 pt-3">
                     <button v-if="!userCreationOpen" class="btn btn-primary" @click="openUserCreation()">Add new user</button>
-                    <div v-else class="form-group">
-                        <input id="userName" v-model="userName" class="form-control mx-auto input-field" placeholder="User's name">
+                    <div v-else class="form-group mx-auto py-4 creation">
+                        <input id="userName" v-model="userName" class="form-control mx-auto input-field mb-1" placeholder="User's name">
                         <input id="userBalance" v-model="userBalance" class="form-control mx-auto input-field" placeholder="User's balance">
-                        <button class="btn btn-primary" @click="addNewUser()">Add user</button>
+                        <p v-if="creationWarning" class="bg-warning m-0">Please enter your information</p>
+                        <button class="btn btn-primary mr-1 mt-3" @click="addNewUser()">Add user</button>
+                        <button class="btn btn-danger mt-3" @click="userCreationOpen = false">Cancel</button>
                     </div>
                 </div>
 
-                <h2 class="mx-auto mt-4">Transactions</h2>
+                <h2 class="mx-auto mt-4 d">Transactions</h2>
                 <div class="col-12" v-for="transaction in transactions">
                     <span class="font-weight-bold">{{ transaction.from }}</span> payed <span class="font-weight-bold">{{ transaction.amount }}</span>DKK for saying <span class="font-weight-bold">{{ transaction.word }}</span>.
                 </div>
@@ -45,7 +47,8 @@ export default {
             jarBalance: 0,
             userCreationOpen: false,
             userName: '',
-            userBalance: ''
+            userBalance: '',
+            creationWarning: false
         }
     },
     created() {
@@ -77,9 +80,11 @@ export default {
     methods: {
         openUserCreation() {
             this.userCreationOpen = true;
+            this.creationWarning = false;
         },
         addNewUser() {
             if (!this.userName || !this.userBalance || !/\d+\.\d{2}/.test(this.userBalance)) {
+                this.creationWarning = true;
                 return;
             }
 
@@ -88,6 +93,7 @@ export default {
                 balance: Number(this.userBalance)
             });
             this.userCreationOpen = false;
+            this.creationWarning = false;
         }
     }
 }
@@ -96,5 +102,13 @@ export default {
 <style>
 .input-field {
     max-width: 20rem;
+}
+
+.creation {
+    border: 1px solid gray;
+    -webkit-border-radius: 1rem;
+    -moz-border-radius: 1rem;
+    border-radius: 1rem;
+    width: 25rem;
 }
 </style>
